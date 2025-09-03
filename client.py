@@ -32,13 +32,11 @@ async def main():
     model = ChatGroq(model="llama-3.1-8b-instant")
     agent = create_react_agent(model, tools)
 
-    # Math test (this already works)
     math_response = await agent.ainvoke(
         {"messages": [{"role": "user", "content": "what's (3 + 5) x 10?"}]}
     )
     print("Math response:", math_response['messages'][-1].content)
 
-    # Weather test - BE VERY EXPLICIT about tool usage
     weather_response = await agent.ainvoke(
         {"messages": [
             {"role": "system", "content": "You are a helpful assistant. You have exactly these tools available: add, multiply, and get_weather. You must ONLY use these tools. You cannot use any web search tools. When asked about weather, you MUST use the get_weather tool."},
